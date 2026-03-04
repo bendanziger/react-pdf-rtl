@@ -1,0 +1,57 @@
+{
+  "name": "react-pdf-rtl",
+  "version": "0.1.0",
+  "description": "RTL (Hebrew & Arabic) support utilities and components for @react-pdf/renderer",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --external react --external @react-pdf/renderer",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "react-pdf",
+    "rtl",
+    "hebrew",
+    "arabic",
+    "pdf",
+    "right-to-left",
+    "bidi",
+    "bidirectional",
+    "israel",
+    "he",
+    "ar"
+  ],
+  "author": "Ben Danziger",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bendanziger/react-pdf-rtl"
+  },
+  "peerDependencies": {
+    "@react-pdf/renderer": ">=3.0.0",
+    "react": ">=17.0.0"
+  },
+  "devDependencies": {
+    "@react-pdf/renderer": "^4.3.2",
+    "@types/react": "^18.3.28",
+    "@vitest/coverage-v8": "^4.0.18",
+    "react": "^18.3.1",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}
