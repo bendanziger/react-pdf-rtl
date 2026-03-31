@@ -130,9 +130,9 @@ export function formatCurrencyRTL(
 
   const valueStr = amount < 0 ? `-${formatted}` : formatted;
 
-  // RLM before symbol keeps it on the right in RTL context
-  // LRE...PDF around the number prevents digit reversal
-  return `\u200F${symbol}${wrapLTR(valueStr)}`;
+  // In RTL context (direction: "rtl"), the symbol naturally appears
+  // on the right side when reading. No bidi markers needed.
+  return `${symbol}${valueStr}`;
 }
 
 /**
