@@ -88,14 +88,29 @@ setupHebrewPDF();           // defaults to "Rubik"
 setupHebrewPDF("NotoSansHebrew");
 ```
 
+> **Note:** `setupHebrewPDF()` loads the font from GitHub at runtime (requires internet).
+> For production environments or offline use, provide a local TTF file instead:
+> ```ts
+> import { registerRTLFont, disableHyphenation } from "react-pdf-rtl";
+>
+> registerRTLFont({
+>   family: "Rubik",
+>   fonts: [{ src: "/fonts/Rubik.ttf" }],
+> });
+> disableHyphenation();
+> ```
+> Download Rubik TTF: [google/fonts on GitHub](https://github.com/google/fonts/tree/main/ofl/rubik)
+
 #### `registerRubik()`
-Registers Rubik (weights 300, 400, 500, 700) from Google Fonts CDN.
+Registers the Rubik variable TTF (weights 300–700) from the google/fonts GitHub repository.
+Requires internet access at render time.
 
 #### `registerNotoSansHebrew()`
-Registers Noto Sans Hebrew from Google Fonts CDN.
+Registers Noto Sans Hebrew variable TTF from the google/fonts GitHub repository.
+Requires internet access at render time.
 
 #### `registerRTLFont(options)`
-Register any custom font:
+Register any custom font — recommended for production:
 ```ts
 registerRTLFont({
   family: "MyFont",
@@ -114,7 +129,7 @@ Prevents Hebrew words from being split mid-word. Called automatically by `setupH
 ### Components
 
 #### `<RTLText>`
-Drop-in replacement for `<Text>` with automatic RTL detection and bidi wrapping.
+Drop-in replacement for `<Text>` with automatic RTL detection. Sets `direction: "rtl"` via style for Hebrew/Arabic content.
 
 ```tsx
 <RTLText style={{ fontSize: 14 }}>חפירה וביסוס - 3 מ"ק</RTLText>
