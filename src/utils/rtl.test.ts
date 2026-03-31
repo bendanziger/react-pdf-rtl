@@ -166,15 +166,16 @@ describe("formatCurrencyRTL", () => {
     expect(result).toContain("1,500");
   });
 
-  it("includes RLM before symbol", () => {
+  it("starts with the currency symbol", () => {
     const result = formatCurrencyRTL(1000);
-    expect(result.charCodeAt(0)).toBe(0x200f); // RLM
+    expect(result.charCodeAt(0)).toBe("₪".charCodeAt(0));
   });
 
-  it("wraps the number in LRE...PDF to prevent reversal", () => {
+  it("does not contain bidi markers (relies on CSS direction instead)", () => {
     const result = formatCurrencyRTL(1000);
-    expect(result).toContain(BIDI.LRE);
-    expect(result).toContain(BIDI.PDF);
+    expect(result).not.toContain(BIDI.LRE);
+    expect(result).not.toContain(BIDI.PDF);
+    expect(result).not.toContain(BIDI.RLM);
   });
 
   it("handles zero", () => {

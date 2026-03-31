@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import type { Style } from "@react-pdf/types";
-import { smartWrap, wrapRTL, hasRTLChars, formatCurrencyRTL } from "../utils/rtl";
+import { isRTLDominant, hasRTLChars, formatCurrencyRTL } from "../utils/rtl";
 
 // ─── RTLText ────────────────────────────────────────────────────────────────
 
@@ -28,19 +28,12 @@ export interface RTLTextProps {
  */
 export function RTLText({ children, style, direction = "auto", wrap = true, debug }: RTLTextProps) {
   const str = String(children);
-
-  let content: string;
-  if (direction === "rtl") {
-    content = wrapRTL(str);
-  } else if (direction === "ltr") {
-    content = str;
-  } else {
-    content = smartWrap(str);
-  }
+  const isRTL = direction === "rtl" || (direction === "auto" && isRTLDominant(str));
+  const dirStyle: Style = isRTL ? { direction: "rtl", textAlign: "right" } : {};
 
   return (
-    <Text style={style} wrap={wrap} debug={debug}>
-      {content}
+    <Text style={[dirStyle, style as Style]} wrap={wrap} debug={debug}>
+      {str}
     </Text>
   );
 }
@@ -178,9 +171,10 @@ export function RTLTable({
                 fontWeight: "bold",
                 color: headerColor,
                 textAlign: col.align ?? "right",
+                direction: "rtl",
               }}
             >
-              {wrapRTL(col.header)}
+              {col.header}
             </Text>
           </View>
         ))}
@@ -205,8 +199,7 @@ export function RTLTable({
             } else if (col.isCurrency && typeof raw === "number") {
               cellText = formatCurrencyRTL(raw);
             } else {
-              const str = String(raw ?? "");
-              cellText = hasRTLChars(str) ? wrapRTL(str) : str;
+              cellText = String(raw ?? "");
             }
 
             return (
@@ -216,6 +209,7 @@ export function RTLTable({
                     fontSize,
                     color: "#111827",
                     textAlign: col.align ?? (col.isCurrency ? "left" : "right"),
+                    direction: hasRTLChars(String(raw ?? "")) ? "rtl" : "ltr",
                   }}
                 >
                   {cellText}
@@ -287,8 +281,8 @@ export function RTLSummaryRow({
 
   return (
     <View style={[styles.summaryRow, { fontFamily }]}>
-      <Text style={{ fontSize, fontWeight: bold ? "bold" : "normal", color, textAlign: "right" }}>
-        {wrapRTL(label)}
+      <Text style={{ fontSize, fontWeight: bold ? "bold" : "normal", color, textAlign: "right", direction: "rtl" }}>
+        {label}
       </Text>
       <Text style={{ fontSize, fontWeight: bold ? "bold" : "normal", color, textAlign: "left" }}>
         {displayValue}

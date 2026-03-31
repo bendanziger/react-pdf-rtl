@@ -47,32 +47,25 @@ export function registerRTLFont(options: RegisterRTLFontOptions): void {
 }
 
 /**
- * Registers the Rubik font from Google Fonts CDN.
+ * Registers the Rubik font from Google Fonts GitHub repository (TTF format).
  * Rubik is the recommended font for Hebrew PDFs — designed for Hebrew,
  * supports all weights, and renders cleanly in @react-pdf/renderer.
+ *
+ * Uses the variable TTF font (single file, all weights 300–900).
+ * Note: @react-pdf/renderer requires TTF/OTF — WOFF2 is not supported.
  *
  * Weights registered: 300 (Light), 400 (Regular), 500 (Medium), 700 (Bold)
  */
 export function registerRubik(): void {
+  const src =
+    "https://raw.githubusercontent.com/google/fonts/main/ofl/rubik/Rubik%5Bwght%5D.ttf";
   Font.register({
     family: "Rubik",
     fonts: [
-      {
-        src: "https://fonts.gstatic.com/s/rubik/v28/iJWZBXyIfDnIV5PNhY1KTN7Z-Yh-B4i1UA.woff2",
-        fontWeight: 300,
-      },
-      {
-        src: "https://fonts.gstatic.com/s/rubik/v28/iJWZBXyIfDnIV5PNhY1KTN7Z-Yh-NYi1UA.woff2",
-        fontWeight: 400,
-      },
-      {
-        src: "https://fonts.gstatic.com/s/rubik/v28/iJWZBXyIfDnIV5PNhY1KTN7Z-Yh-B4i1UA.woff2",
-        fontWeight: 500,
-      },
-      {
-        src: "https://fonts.gstatic.com/s/rubik/v28/iJWZBXyIfDnIV5PNhY1KTN7Z-Yh-0oi1UA.woff2",
-        fontWeight: 700,
-      },
+      { src, fontWeight: 300 },
+      { src, fontWeight: 400 },
+      { src, fontWeight: 500 },
+      { src, fontWeight: 700 },
     ],
   });
 }
