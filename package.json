@@ -1,6 +1,6 @@
 {
   "name": "react-pdf-rtl",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "RTL (Hebrew & Arabic) support utilities and components for @react-pdf/renderer",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
